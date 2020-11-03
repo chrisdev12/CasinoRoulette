@@ -1,0 +1,9 @@
+version: "3"
+
+services:
+  API:
+    build: 
+      context: ./Roulette/
+    container_name: "Roulette_API"
+    ports:
+      - "5000:44383"
