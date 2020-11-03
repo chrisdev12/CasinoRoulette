@@ -79,7 +79,8 @@ namespace Roulette.API.Controllers
         [HttpPost("bet")]
         public async Task<IActionResult> Bet([FromBody] RouletteBet Bet)
         {
-            UserDynamo userInfo = await _DBDynamo.Get(new UserDynamo { Email = ClaimsHelper.GetValue(HttpContext) });
+            var tokenEmailSession = new UserDynamo { Email = ClaimsHelper.GetValue(HttpContext) };
+            UserDynamo userInfo = await _DBDynamo.Get(tokenEmailSession);
             if (Quantity.IsBigger(baseValue: Bet.Player.Cash, comparedValue: userInfo.Cash))
                 return BadRequest("Not enough cash. Charge your account and try later please.");
             Bet.Player.Email = userInfo.Email;
